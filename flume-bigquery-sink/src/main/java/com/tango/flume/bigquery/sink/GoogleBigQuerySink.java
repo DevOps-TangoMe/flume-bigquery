@@ -178,8 +178,15 @@ public class GoogleBigQuerySink extends AbstractSink implements Configurable {
         TableDataInsertAllRequest.Rows insertRequestRows = null;
         try {
             insertRequestRows = insertRequestRowsBuilderFactory.createRows(event);
+            if (logger.isDebugEnabled()) {
+                if (insertRequestRows != null) {
+                    logger.debug("Row created from event '%s': %s", event, insertRequestRows.toPrettyString());
+                } else {
+                    logger.debug("No row created from event '%s'", event);
+                }
+            }
         } catch (Exception ex) {
-            logger.warn(String.format("Error creating rows from event: %s. Skipping it.", ex.getMessage()), ex);
+            logger.warn(String.format("Error creating rows from event '%s': %s. Skipping it.", event, ex.getMessage()), ex);
         }
         return insertRequestRows;
     }
