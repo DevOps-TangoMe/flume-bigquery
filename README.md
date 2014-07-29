@@ -37,7 +37,8 @@ Sink configuration example:
     agent.sinks.bigquerySink.rowFactory.includeHeaders = timestamp=event_time,event_type,event_duration
     agent.sinks.bigquerySink.rowFactory.excludeHeaders =
 
-maxTryCount - if specified value is more than 0 than no more than maxTryCount insert request attempts will be accomplished and if finally failed, than events batch will be skipped.
+maxTryCount - if specified value is more than 0 than no more than maxTryCount insert request attempts will be accomplished and if finally failed than events batch will be skipped;
+if specified value is less or equal to zero than in case of failure transaction will be rolled back and the same batch insert will be retried in a new transaction and so indefinitely till success
 serviceAccountId - email address for your service account (usually looks like 1234567890@developer.gserviceaccount.com)
 serviceAccountPrivateKeyFromP12File - path to private key downloaded from the Google Developers console
 projectId, datasetId, tableId - corresponding BigQuery project id, dataset id and table id to stream data to
