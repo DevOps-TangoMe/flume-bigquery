@@ -44,7 +44,9 @@ if specified value is less or equal to zero than in case of failure transaction 
 * projectId, datasetId, tableId - corresponding BigQuery project id, dataset id and table id to stream data to
 * rowFactory - FQCN of com.tango.flume.bigquery.sink.IInsertRequestRowsBuilderFactory interface implementation that defines the way the BigQuery table row will be composed from the flume event, default is com.tango.flume.bigquery.sink.InsertRequestRowsBuilderFactory
 
+
 `com.tango.flume.bigquery.sink.InsertRequestRowsBuilderFactory` has additional configuration abilities:
+
 1. idHeader - the name of flume event header which value will be used to assign id to the BigQuery row. If not specified - no id will be assigned.
 2. includeHeaders - comma separated list of flume event header names to be used as columns of the BigQuery row. Renaming of columns is supported by specifying source and target name with equal sign delimiter (see sink configuration example).
 3. excludeHeaders - comma separated list of flume event header names to not include as columns of the BigQuery row.
