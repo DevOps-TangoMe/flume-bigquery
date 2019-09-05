@@ -36,13 +36,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Java compiler configuration -->
-        <sourceJavaVersion>1.6</sourceJavaVersion>
-        <targetJavaVersion>1.6</targetJavaVersion>
+        <sourceJavaVersion>1.8</sourceJavaVersion>
+        <targetJavaVersion>1.8</targetJavaVersion>
 
-        <maven.compiler.version>2.3.2</maven.compiler.version>
+        <maven.compiler.version>3.8.1</maven.compiler.version>
         <maven.surefire.version>2.16</maven.surefire.version>
         <maven.assembly.version>2.4</maven.assembly.version>
-        <maven.rpm.version>2.1-alpha-3</maven.rpm.version>
+        <maven.rpm.version>2.2.0</maven.rpm.version>
         <surefire.forkcount>1C</surefire.forkcount>
 
         <!-- Tests to run -->
@@ -62,6 +62,7 @@
             <plugin>
                 <groupId>org.apache.rat</groupId>
                 <artifactId>apache-rat-plugin</artifactId>
+                <version>0.13</version>
             </plugin>
 
         </plugins>
