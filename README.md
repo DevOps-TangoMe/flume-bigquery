@@ -25,9 +25,9 @@ Sink configuration example:
     agent.sinks.bigquerySink.type = com.tango.flume.bigquery.sink.GoogleBigQuerySink
     agent.sinks.bigquerySink.serviceAccountId = {service_account_id}
     agent.sinls.bigquerySink.serviceAccountPrivateKeyFromP12File = /path/to/p12/private/key
-    agent.sinks.bigquerySink.projectId = {bigquery_projectId}
-    agent.sinks.bigquerySink.datasetId = {bigquery_datasetId}
-    agent.sinks.bigquerySink.tableId = {bigquery_tableIdId}
+    agent.sinks.bigquerySink.projectId = %{projectId}
+    agent.sinks.bigquerySink.datasetId = %{datasetId}
+    agent.sinks.bigquerySink.tableId = %{tableIdId}
     agent.sinks.bigquerySink.batchSize = 100
     agent.sinks.bigquerySink.connectTimeoutMs = 10000
     agent.sinls.bigquerySink.readTimeoutMs = 20000
@@ -41,7 +41,9 @@ Sink configuration example:
 if specified value is less or equal to zero than in case of failure transaction will be rolled back and the same batch insert will be retried in a new transaction and so indefinitely till success
 * serviceAccountId - email address for your service account (usually looks like 1234567890@developer.gserviceaccount.com)
 * serviceAccountPrivateKeyFromP12File - path to private key downloaded from the Google Developers console
-* projectId, datasetId, tableId - corresponding BigQuery project id, dataset id and table id to stream data to
+* projectId, datasetId, tableId - corresponding BigQuery project id, dataset id and table id to stream data to. 
+Arbitrary header names are supported for these fields so you can either specify them directly in the conf file or you can send
+them in the event headers.
 * rowFactory - FQCN of com.tango.flume.bigquery.sink.IInsertRequestRowsBuilderFactory interface implementation that defines the way the BigQuery table row will be composed from the flume event, default is com.tango.flume.bigquery.sink.InsertRequestRowsBuilderFactory
 
 

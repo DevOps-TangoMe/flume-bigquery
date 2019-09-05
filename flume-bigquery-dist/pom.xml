@@ -69,17 +69,8 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>rpm-maven-plugin</artifactId>
                 <version>${maven.rpm.version}</version>
-                <executions>
-                    <execution>
-                        <id>generate-rpm</id>
-                        <goals>
-                            <goal>rpm</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
                     <name>tango-flume-bigquery</name>
-                    <copyright>2014, Tango</copyright>
                     <distribution>Tango</distribution>
                     <group>Development/Libraries</group>
                     <packager>Tango</packager>

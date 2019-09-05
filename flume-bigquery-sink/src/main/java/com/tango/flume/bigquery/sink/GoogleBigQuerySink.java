@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.flume.Channel;
@@ -93,6 +94,9 @@ public class GoogleBigQuerySink extends AbstractSink implements Configurable {
                     break;
                 }
 
+                // allow arbitrary header substitution of project, data set and table properties
+                this.setBigQueryDetailsFromEventHeadersIfNeeded(event.getHeaders());
+
                 TableDataInsertAllRequest.Rows insertRequestRows = createRows(event);
                 if (insertRequestRows != null) {
                     rowList.add(insertRequestRows);
@@ -174,6 +178,30 @@ public class GoogleBigQuerySink extends AbstractSink implements Configurable {
         return status;
     }
 
+    /**
+     * Similar to other official Flume sinks like the HDFS Sink, we'd like to allow arbitrary header substitution
+     * for certain properties in the sink configuration. In this case, we'll allow arbitrary header names for the
+     * projectId, datasetId and tableId fields.
+     * This means that we'll be using the values in the event headers for assigning these properties, and then
+     * removing them from the headers for avoiding errors when creating the table rows from the event.
+     */
+    private void setBigQueryDetailsFromEventHeadersIfNeeded(Map<String, String> eventHeaders) {
+        if (eventHeaders.containsKey(PROJECT_ID)) {
+            this.projectId = eventHeaders.get(PROJECT_ID);
+            eventHeaders.remove(PROJECT_ID);
+        }
+
+        if (eventHeaders.containsKey(DATASET_ID)) {
+            this.datasetId = eventHeaders.get(DATASET_ID);
+            eventHeaders.remove(DATASET_ID);
+        }
+
+        if (eventHeaders.containsKey(TABLE_ID)) {
+            this.tableId = eventHeaders.get(TABLE_ID);
+            eventHeaders.remove(TABLE_ID);
+        }
+    }
+
     protected TableDataInsertAllRequest.Rows createRows(Event event) {
         TableDataInsertAllRequest.Rows insertRequestRows = null;
         try {
@@ -235,6 +263,7 @@ public class GoogleBigQuerySink extends AbstractSink implements Configurable {
         Preconditions.checkState(StringUtils.isNotBlank(serviceAccountId), "Missing Param:" + SERVICE_ACCOUNT_ID);
         Preconditions.checkState(StringUtils.isNotBlank(serviceAccountPrivateKeyFromP12File), "Missing Param:"
                 + SERVICE_ACCOUNT_PRIVATE_KEY_FROM_P12_FILE);
+        Preconditions.checkState(StringUtils.isNotBlank(projectId), "Missing Param:" + PROJECT_ID);
         Preconditions.checkState(StringUtils.isNotBlank(datasetId), "Missing Param:" + DATASET_ID);
         Preconditions.checkState(StringUtils.isNotBlank(tableId), "Missing Param:" + TABLE_ID);
         Preconditions.checkState(batchSize > 0, BATCH_SIZE + " must be greater than 0");
