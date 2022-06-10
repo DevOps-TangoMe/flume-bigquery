@@ -49,7 +49,7 @@
         <test.include.pattern>**/Test*.java</test.include.pattern>
 
         <flume.version>1.5.0-cdh5.1.0</flume.version>
-        <google.version>1.18.0-rc</google.version>
+        <google.version>1.33.3</google.version>
         <junit.version>4.10</junit.version>
         <mockito.version>1.9.0</mockito.version>
     </properties>
